@@ -1,0 +1,38 @@
+# Bytes compilados de Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Cajuiles y configuraciones de Jupyter
+.ipynb_checkpoints/
+*.ipynb_checkpoints
+
+# Entornos virtuales
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Distribución / Empaquetado
+build/
+dist/
+wheels/
+*.egg-info/
+
+# Datos (Ignorar archivos grandes, mantener estructura si se desea)
+# Ignora todo en data/ excepto archivos .gitkeep si existieran para mantener la carpeta
+data/raw/*
+!data/raw/.gitkeep
+data/processed/*
+!data/processed/.gitkeep
+
+# Archivos de sistema
+.DS_Store
+Thumbs.db
+
+# Credenciales y secretos (IMPORTANTE)
+secrets.json
+credentials.json
