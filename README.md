@@ -1,55 +1,77 @@
-# sql-database
-"Análisis de datos de Nintendo: Estrategia de videojuegos con SQL y Python." 
+Nintendo Data Analytics: Regional Sales & Review Insights for Genre Strategy
 
-'hola'
+
+ ## Objetivo del proyecto →
+ Construir una base de datos integrada de ventas y críticas de videojuegos para identificar qué géneros funcionan mejor por región y evaluar si el género más vendido coincide con el mejor valorado (crítica profesional y usuarios).
+
+
+## Contexto del negocio → 
+Empresa simulada: Nintendo (equipo interno de Data Analytics).
+
+Desafío: priorizar el desarrollo y la estrategia de lanzamiento/marketing de nuevos títulos basándose en diferencias regionales de demanda y en la relación entre ventas y percepción de calidad.
+
+Decisiones clave: 
+- Qué géneros priorizar para Japón vs mercados occidentales (NA y Europa/África).
+- Si apostar por géneros “top ventas” implica también buena recepción crítica.
+
 
 ## Estructura del Proyecto
 
 sql-database/
-│
-├── data/
-│   ├── raw/                <-- GUARDA AQUÍ tus CSVs descargados hoy
-│   └── processed/          <-- Aquí guardaremos los CSVs limpios mañana
-│
-├── notebooks/
-│   ├── 1_exploracion.ipynb <-- Tu cuaderno de sucio (trabajo de hoy)
-│   ├── 2_limpieza.ipynb    <-- Tu cuaderno de transformación (trabajo de mañana)
-│   └── 3_reporte.ipynb     <-- El informe final con gráficas y narrativa
-│
-├── src/                    <-- CÓDIGO FUENTE (Vital para la nota)
-│   ├── soporte.py          <-- Aquí escribirás tus funciones de limpieza (def clean_data...)
-│   └── __init__.py         <-- (Opcional) Archivo vacío para que Python reconozca la carpeta
-│
-├── sql/
-│   ├── esquema.sql         <-- El código CREATE TABLE para crear la base de datos
-│   ├── consultas.sql       <-- Todas las queries (SELECT, JOIN) que hagas
-│   └── erd_diagrama.png    <-- La imagen de tu diagrama de relaciones
-│
-├── .gitignore              <-- Archivo de configuración para Git
-└── README.md               <-- La documentación del proyecto
+ data/        → datasets originales y procesados 
+ notebooks/   → exploración y limpieza 
+ sql/         → esquema de la base de datos, consultas y ERD
+ src/         → funciones reutilizables de Python
 
 
-
-🧪 Hipótesis del Proyecto
-Para responder a la pregunta de negocio, hemos planteado dos hipótesis analíticas que validaremos mediante datos (SQL & Python):
-
-## Hipótesis 1: Benchmarking Competitivo y Océanos Rojos
- -- "La Estrategia de Diferenciación"
-
--- Planteamiento: Los principales competidores del mercado (Publisher != 'Nintendo') concentran la mayor parte de sus ingresos en géneros sobresaturados como Shooters y Acción, creando un "Océano Rojo" (alta competencia, márgenes ajustados).
-
--- Validación: Si los datos demuestran que Nintendo lidera nichos de mercado exclusivos (como Plataformas o Aventura Familiar) donde la competencia es mínima, la recomendación será MANTENER EL RUMBO en cuanto a desarrollo de producto, evitando imitar a la competencia.
-
-## Hipótesis 2: Divergencia Regional y Localización
-"La Estrategia de Expansión Global"
-
--- Planteamiento: Existe una discrepancia significativa en la recepción de productos entre el mercado local (Japón) y el mercado global (Occidente). Históricamente, se asignan recursos a títulos que solo funcionan en Japón (JP_Sales), descuidando el potencial de crecimiento en Norteamérica y Europa.
-
--- Validación: Si los datos revelan que la rentabilidad de géneros clave (como RPGs) cae drásticamente fuera de Japón, mientras que otros géneros tienen demanda universal, la recomendación será CAMBIAR LA ESTRATEGIA de ventas, priorizando la "occidentalización" del catálogo y optimizando el presupuesto de marketing global.
-
-## 📊 Fuentes de Datos
+ ## 📊 Fuentes de Datos
 -- Para este análisis se integrarán dos fuentes de datos complementarias:
 
 -- Ventas y Mercado (Quantitative): Video Game Sales 2024 (Incluyendo datos históricos y de Nintendo Switch).
 
--- Crítica y Calidad (Qualitative): Metacritic Reviews 2025 (Metascore y User Score).
+-- Crítica y Calidad (Qualitative): Metacritic Reviews 2025 (Metascore y User Score) 
+
+Tablas y variables principales
+- 
+- 
+- 
+
+ Diccionario breve
+- 
+
+## Notas sobre calidad del dato (si aportan contexto).
+
+
+## Preguntas clave → 
+- H1. ¿Qué géneros lideran las ventas (porcentaje del total) en cada región: Japón, Norteamérica, Europa/África y otros mercados?
+- H2. ¿El género más vendido coincide con el género mejor valorado (metascore y userscore)? Si no coincide, ¿qué diferencias se observan?
+
+
+## Proceso de análisis →
+ Describe brevemente: EDA, limpieza, KPIs calculados, métricas clave usadas, metodología aplicada
+(cohortes, RFM, funnels, etc.)
+
+
+## Resultados / Insights → 
+- Insight H1: (pendiente)
+
+- Insight H2: (pendiente)
+
+
+## Recomendaciones de negocio → 
+Tu interpretación profesional:qué decisión tomar, qué experimentos lanzar, qué
+optimizar, qué priorizar. (pendiente)
+
+
+## Limitaciones → 
+- Falta de variables como precio o campañas de marketing.
+
+
+## Próximos pasos → 
+- Usar keys adicionales para mejorar el matching (plataforma, año, publisher).
+- Analizar por consola o plataforma además de por género.
+- Incluir análisis de tendencias por año.
+- Analizar por rating ESRB para ver el impacto del público objetivo.
+
+## Cómo replicar el proyecto → 
+Enlace al notebook, queries SQL o dashboard
