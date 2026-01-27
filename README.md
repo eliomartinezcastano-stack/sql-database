@@ -30,3 +30,26 @@ sql-database/
 
 
 
+🧪 Hipótesis del Proyecto
+Para responder a la pregunta de negocio, hemos planteado dos hipótesis analíticas que validaremos mediante datos (SQL & Python):
+
+## Hipótesis 1: Benchmarking Competitivo y Océanos Rojos
+ -- "La Estrategia de Diferenciación"
+
+-- Planteamiento: Los principales competidores del mercado (Publisher != 'Nintendo') concentran la mayor parte de sus ingresos en géneros sobresaturados como Shooters y Acción, creando un "Océano Rojo" (alta competencia, márgenes ajustados).
+
+-- Validación: Si los datos demuestran que Nintendo lidera nichos de mercado exclusivos (como Plataformas o Aventura Familiar) donde la competencia es mínima, la recomendación será MANTENER EL RUMBO en cuanto a desarrollo de producto, evitando imitar a la competencia.
+
+## Hipótesis 2: Divergencia Regional y Localización
+"La Estrategia de Expansión Global"
+
+-- Planteamiento: Existe una discrepancia significativa en la recepción de productos entre el mercado local (Japón) y el mercado global (Occidente). Históricamente, se asignan recursos a títulos que solo funcionan en Japón (JP_Sales), descuidando el potencial de crecimiento en Norteamérica y Europa.
+
+-- Validación: Si los datos revelan que la rentabilidad de géneros clave (como RPGs) cae drásticamente fuera de Japón, mientras que otros géneros tienen demanda universal, la recomendación será CAMBIAR LA ESTRATEGIA de ventas, priorizando la "occidentalización" del catálogo y optimizando el presupuesto de marketing global.
+
+## 📊 Fuentes de Datos
+-- Para este análisis se integrarán dos fuentes de datos complementarias:
+
+-- Ventas y Mercado (Quantitative): Video Game Sales 2024 (Incluyendo datos históricos y de Nintendo Switch).
+
+-- Crítica y Calidad (Qualitative): Metacritic Reviews 2025 (Metascore y User Score).
