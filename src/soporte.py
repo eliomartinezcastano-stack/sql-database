@@ -4,6 +4,8 @@ import numpy as np
 import re 
 
 
+### TABLA METACRITIC ###
+
 def filtrar_y_renombrar_columnas(df):
     """ FUNCIÓN 1: Estructura """
     print(" 1. Seleccionando columnas útiles y renombrando para SQL")
@@ -99,87 +101,81 @@ def unificar_juegos_duplicados(df):
 
     return df
 
-
-######  TABLA SALES  ######
-
-#LIMPIEZA DE COLUMNAS
-#columnas a mantener
-columns_to_mantain = [
-    'title',
-    'genre',
-    'critic_score',
-    'total_sales',
-    'na_sales',
-    'jp_sales',
-    'other_sales'
-]
-
-df_sales = df_sales[columns_to_mantain]
-
-print(df_sales.columns)
+### TABLA VENTAS ###
 
 
-df_sales_cols = [
-    "total_sales",
-    "na_sales",
-    "jp_sales",
-    "pal_sales",
-    "other_sales"
-]
+def limpiar_estructura_ventas(df):
+    """Función 1: Limpieza inicial """
+    print(" Estructurando tabla de ventas...")
+    
+    columns_to_mantain = ['title', 'genre', 'critic_score', 'total_sales', 'na_sales', 'jp_sales', 'other_sales']
+    # Filtramos solo las que existan para no dar error
+    cols = [c for c in columns_to_mantain if c in df.columns]
+    df = df[cols].copy()
+    
+    # Convertir a numérico
+    cols_num = ['total_sales', 'na_sales', 'jp_sales', 'other_sales']
+    for c in cols_num:
+        if c in df.columns:
+            df[c] = pd.to_numeric(df[c], errors='coerce')
+
+    # Eliminar titulos vacios
+    if 'title' in df.columns:
+        df.dropna(subset=['title'], inplace=True)
+    
+    return df
 
 
-#SUMAR Y UNIFICAR 
-#unificar titulos y ventas (suma y duplicados)
+def agrupar_ventas(df):
+    """Función 2: Agrupación y Cálculos Regionales """
+    print("Agrupando y calculando regiones...")
+    
+    # 1. Agrupar por título (Sumar ventas)
+    if 'title' in df.columns:
+        reglas = {
+            "total_sales": "sum",
+            "na_sales": "sum",
+            "jp_sales": "sum",
+            "other_sales": "sum",
+            "genre": "first"
+        }
+        # Filtrar reglas válidas
+        reglas_validas = {k: v for k, v in reglas.items() if k in df.columns}
+        
+        df = df.groupby("title", as_index=False).agg(reglas_validas)
+        
+        # Ordenar
+        if 'total_sales' in df.columns:
+            df = df.sort_values(by="total_sales", ascending=False)
 
-df_sales_unified = (
-    df_sales
-    .groupby("title", as_index=False)
-    .agg({
-        "total_sales": "sum",
-        "na_sales": "sum",
-        "jp_sales": "sum",
-        "other_sales": "sum"
-    })
-)
+        # 2. Crear columnas regionales (Japón vs Resto)
+        if 'jp_sales' in df.columns:
+            df["sales_japan"] = df["jp_sales"]
+        
+        if 'na_sales' in df.columns and 'other_sales' in df.columns:
+            df["sales_non_japan"] = df["na_sales"] + df["other_sales"]
+            
+        if 'total_sales' in df.columns:
+            df["sales_total"] = df["total_sales"]
+            
+    return df
 
-df_sales_grouped = df_sales_unified
 
-#ESTRUCTURA
-#ordenar por ventas totales
-df_sales_unified = df_sales_unified.sort_values(
-    by="total_sales",
-    ascending=False
-)
 
-df_sales_unified.head(25)
 
-#separar ventas 
 
-df_sales_grouped["sales_japan"] = df_sales_grouped["jp_sales"]
 
-df_sales_grouped["sales_non_japan"] = (
-    df_sales_grouped["na_sales"]
-    + df_sales_grouped["other_sales"]
-)
 
-df_sales_grouped["sales_total"] = df_sales_grouped["total_sales"]
 
-#REVISAR CAMBIOS E INFORMACION 
-df_sales_grouped.info()
 
-#LIMPIEZA DE TEXTO Y VALORES
-#convertir ceros a Nan
-import numpy as np
 
-df_sales.replace(0, np.nan, inplace=True)
-df_sales.dropna(inplace=True)
 
-#eliminar filas NaN
-df_sales.dropna(inplace=True)
 
-#verificacion
-df_sales.isna().sum()
-df_sales.shape
 
-#TABLA LIMPIA 
-df_sales.head()
+
+
+
+
+
+
+
