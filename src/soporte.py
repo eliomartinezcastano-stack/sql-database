@@ -105,21 +105,26 @@ def unificar_juegos_duplicados(df):
 
 
 def limpiar_estructura_ventas(df):
-    """Función 1: Limpieza inicial """
-    print(" Estructurando tabla de ventas...")
+    """ Función 1: Limpieza inicial """
+    print(" 1. Estructurando tabla e incluyendo PAL (Europa)...")
     
-    columns_to_mantain = ['title', 'genre', 'critic_score', 'total_sales', 'na_sales', 'jp_sales', 'other_sales']
-    # Filtramos solo las que existan para no dar error
+    # Columnas a mantener 
+    columns_to_mantain = [
+        'title', 'genre', 'critic_score', 'total_sales', 
+        'na_sales', 'jp_sales', 'pal_sales', 'other_sales'
+    ]
+    
+    # Filtramos solo las que existan
     cols = [c for c in columns_to_mantain if c in df.columns]
     df = df[cols].copy()
     
-    # Convertir a numérico
-    cols_num = ['total_sales', 'na_sales', 'jp_sales', 'other_sales']
+    
+    cols_num = ['total_sales', 'na_sales', 'jp_sales', 'pal_sales', 'other_sales']
     for c in cols_num:
         if c in df.columns:
             df[c] = pd.to_numeric(df[c], errors='coerce')
 
-    # Eliminar titulos vacios
+    # Eliminar títulos vacíos
     if 'title' in df.columns:
         df.dropna(subset=['title'], inplace=True)
     
@@ -127,44 +132,38 @@ def limpiar_estructura_ventas(df):
 
 
 def agrupar_ventas(df):
-    """Función 2: Agrupación y Cálculos Regionales """
-    print("Agrupando y calculando regiones...")
+    """ Función 2: Agrupación y Cálculos Regionales """
+    print(" 2. Agrupando y calculando regiones...")
     
-    # 1. Agrupar por título (Sumar ventas)
+    # 1. Agrupar por título
     if 'title' in df.columns:
         reglas = {
             "total_sales": "sum",
             "na_sales": "sum",
             "jp_sales": "sum",
+            "pal_sales": "sum",    
             "other_sales": "sum",
             "genre": "first"
         }
-        # Filtrar reglas válidas
-        reglas_validas = {k: v for k, v in reglas.items() if k in df.columns}
+        reglas_activas = {k: v for k, v in reglas.items() if k in df.columns}
         
-        df = df.groupby("title", as_index=False).agg(reglas_validas)
+        df = df.groupby("title", as_index=False).agg(reglas_activas)
         
         # Ordenar
         if 'total_sales' in df.columns:
             df = df.sort_values(by="total_sales", ascending=False)
 
-        # 2. Crear columnas regionales (Japón vs Resto)
-        if 'jp_sales' in df.columns:
-            df["sales_japan"] = df["jp_sales"]
         
-        if 'na_sales' in df.columns and 'other_sales' in df.columns:
-            df["sales_non_japan"] = df["na_sales"] + df["other_sales"]
-            
-        if 'total_sales' in df.columns:
-            df["sales_total"] = df["total_sales"]
+        # Sumamos: Norteamérica + Europa/Africa (PAL) + Otros
+        cols_non_japan = ['na_sales', 'pal_sales', 'other_sales']
+        
+        # Verificamos que existan antes de sumar
+        cols_presentes = [c for c in cols_non_japan if c in df.columns]
+        
+        if cols_presentes:
+            df["sales_non_japan"] = df[cols_presentes].sum(axis=1)
             
     return df
-
-
-
-
-
-
 
 
 
