@@ -101,15 +101,24 @@ def unificar_juegos_duplicados(df):
 
     return df
 
-### TABLA VENTAS ###
 
+def clean_metacritic_df(df):
+    """Pipeline completo Metacritic."""
+    df = filtrar_y_renombrar_columnas(df)
+    df = normalizar_textos_y_fechas(df)
+    df = estandarizar_puntuaciones(df)
+    df = unificar_juegos_duplicados(df)
+    return df
+
+
+### TABLA VENTAS ###
 
 def limpiar_estructura_ventas(df):
     """ Función 1: Limpieza inicial """
-    print(" 1. Estructurando tabla e incluyendo PAL (Europa)...")
+    print(" 1. Estructurando tabla de ventas...")
     
     # Columnas a mantener 
-    columns_to_mantain = [
+    columns_to_mantain = [ 
         'title', 'genre', 'critic_score', 'total_sales', 
         'na_sales', 'jp_sales', 'pal_sales', 'other_sales'
     ]
@@ -162,9 +171,29 @@ def agrupar_ventas(df):
         
         if cols_presentes:
             df["sales_non_japan"] = df[cols_presentes].sum(axis=1)
-            
+
     return df
 
+def round_sales_columns(df, decimals=2):
+    """ Función 3: Redondeo de columnas de ventas """
+    print(" 3. Redondeando columnas de ventas...")
+    cols = [
+        'total_sales', 'na_sales', 'jp_sales',
+        'pal_sales', 'other_sales', 'sales_non_japan'
+    ]
+    cols = [c for c in cols if c in df.columns]
+    df = df.copy()
+    df[cols] = df[cols].round(decimals)
+    return df
+
+
+def clean_sales_df(df):
+    """Pipeline completo ventas."""
+    df = limpiar_estructura_ventas(df)
+    df = normalizar_title(df)
+    df = agrupar_ventas(df)
+    df = round_sales_columns(df, 2)
+    return df
 
 
 
