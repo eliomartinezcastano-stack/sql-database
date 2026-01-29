@@ -2,6 +2,53 @@
 import pandas as pd
 import numpy as np
 import re 
+from sqlalchemy import text
+
+
+# ESTRUCTURA SQL (Para crear tablas limpias)
+
+def crear_tablas_videogames(engine):
+    
+    print(" Iniciando tablas en SQL...")
+    
+    queries = [
+        "DROP TABLE IF EXISTS sales;",
+        "DROP TABLE IF EXISTS metacritic;",
+        
+        
+        """
+        
+        CREATE TABLE metacritic (
+            title VARCHAR(255) NOT NULL,
+            release_date DATE,
+            genre VARCHAR(255),
+            meta_score INT,
+            user_score FLOAT, 
+            PRIMARY KEY (title)
+        );
+        """,
+        
+        """
+        CREATE TABLE sales (
+            title VARCHAR(255) NOT NULL,
+            genre VARCHAR(255),
+            total_sales FLOAT,
+            na_sales FLOAT,
+            jp_sales FLOAT,
+            pal_sales FLOAT,
+            other_sales FLOAT,
+            sales_non_japan FLOAT,
+            PRIMARY KEY (title)
+        );
+        """
+    ]
+    
+    with engine.connect() as conn:
+        for query in queries:
+            conn.execute(text(query))
+        conn.commit()
+        
+    print(" Tablas 'metacritic' y 'sales' creadas.")
 
 
 ### TABLA METACRITIC ###
@@ -190,7 +237,7 @@ def round_sales_columns(df, decimals=2):
 def clean_sales_df(df):
     """Pipeline completo ventas."""
     df = limpiar_estructura_ventas(df)
-    df = normalizar_title(df)
+    df = normalizar_textos_y_fechas(df)
     df = agrupar_ventas(df)
     df = round_sales_columns(df, 2)
     return df
