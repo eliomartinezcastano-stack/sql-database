@@ -99,6 +99,7 @@ Problemas: Ausencia en Shooter ($144M/año, 2º mercado) y Crítica baja en gén
 
 ## ⚠️ Limitaciones 
 - Falta de variables como precio o campañas de marketing.
+- Datos hasta 2024 (mercado puede haber cambiado).
 
 ## 🚀 Próximos pasos 
 - Usar keys adicionales para mejorar el matching (plataforma, publisher).
