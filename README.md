@@ -92,9 +92,8 @@ La única excepción: RPG → Logra balance: buenas ventas + buena crítica (74/
 Problemas: Ausencia en Shooter ($144M/año, 2º mercado) y Crítica baja en géneros top (Sports/Shooter venden sin calidad).
 
  Acciones:
-1. EXPLOTAR RPG EN OCCIDENTE (Bajo Riesgo)
-   
-2. ENTRAR EN SHOOTER (Mediano Riesgo)
+1. Mejorar la estrategia por región.
+2. Mejorar el marketing en géneros que funcionan más en Japón para expandirlos en otras regiones.
    
 
 ## ⚠️ Limitaciones 
